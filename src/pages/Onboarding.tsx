@@ -7,8 +7,9 @@ import { useAuth } from '@/context/AuthContext'
 import { isOffline } from '@/lib/errors'
 import { DISPLAY_NAME_KEY, MAX_NAME_LENGTH } from '@/lib/profile'
 import { InkAlert, InkField, inkFieldClasses } from '@/components/AuthLayout'
+import { BrandMark } from '@/components/BrandMark'
 import { Button } from '@/components/ui/Button'
-import { IconArrowRight, IconDumbbell } from '@/components/ui/Icons'
+import { IconArrowRight } from '@/components/ui/Icons'
 
 /**
  * Onboarding — einmalig nach der ersten Anmeldung (Screen 01 des Designs).
@@ -77,9 +78,7 @@ export default function Onboarding({ onDone }: { onDone?: () => void }) {
 
       <main className="relative flex flex-1 items-center justify-center px-6 py-10">
         <div className="animate-rise w-full max-w-sm">
-          <span className="grid size-12 place-items-center rounded-[15px] bg-accent text-[24px] text-accent-ink">
-            <IconDumbbell />
-          </span>
+          <BrandMark size={56} />
 
           <h1 className="font-display mt-6 text-[40px] leading-[0.95] uppercase">
             Stärker.

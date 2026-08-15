@@ -88,6 +88,24 @@ Zwei Feinheiten, die beim Tauschen wichtig sind:
   „Heutiges Training"-Karte, die Volumen-Karte und der komplette Trainings-Screen bleiben
   tiefschwarz, egal wie hell der Rest ist.
 
+### Logo und Icons
+
+Die Bildquelle liegt unter [`brand/logo-source.png`](brand/logo-source.png). Daraus abgeleitet
+in `public/`: `icon-192.png`, `icon-512.png`, `icon-512-maskable.png`, `apple-touch-icon.png`
+und `favicon-48.png`.
+
+Beim Ableiten sind drei Dinge zu beachten, falls das Logo einmal getauscht wird:
+
+- **Weißen Rand und Schlagschatten wegschneiden.** Die Quelle hat beides; unbeschnitten säße
+  das Motiv im Icon außermittig und zu klein.
+- **Ecken freistellen.** Das Rundquadrat der Quelle hat weiße Ecken. Ohne Beschnitt auf den
+  eigenen Radius erscheinen sie auf dem Homescreen als weiße Zipfel.
+- **Maskierbare Fassung einrücken.** Android schneidet sie kreisförmig zu; sicher sind nur die
+  inneren 80 %. Deshalb eine eigene Datei mit 11 % Einzug statt derselben wie für `purpose: any`.
+
+Die App-Icons sind bewusst **nicht** im Offline-Cache: Sie werden beim Installieren geholt —
+also online — und würden ihn sonst um gut 700 KB aufblähen.
+
 ### Schriften
 
 **Archivo Black** (Überschriften, Zahlen) und **Manrope** (alles andere) liegen als woff2 unter

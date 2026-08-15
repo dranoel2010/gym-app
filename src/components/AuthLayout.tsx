@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { IconDumbbell } from './ui/Icons'
+import { BrandMark } from './BrandMark'
 
 /**
  * Rahmen der vier Anmeldeseiten.
@@ -36,9 +36,7 @@ export function AuthLayout({
 
       <main className="relative flex flex-1 items-center justify-center px-6 py-10">
         <div className="animate-rise w-full max-w-sm">
-          <span className="grid size-12 place-items-center rounded-[15px] bg-accent text-[24px] text-accent-ink">
-            <IconDumbbell />
-          </span>
+          <BrandMark size={56} />
 
           <h1 className="font-display mt-6 text-[40px] leading-[0.95] uppercase">{title}</h1>
           {description && (

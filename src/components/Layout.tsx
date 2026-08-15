@@ -3,16 +3,9 @@ import type { ComponentType, ReactNode, SVGProps } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { cn } from '@/lib/cn'
 import { AccountButton, AccountSheet } from './AccountSheet'
+import { BrandMark } from './BrandMark'
 import { SyncIndicator } from './SyncIndicator'
-import {
-  IconCheckin,
-  IconData,
-  IconDumbbell,
-  IconHome,
-  IconPlans,
-  IconRuler,
-  IconStats,
-} from './ui/Icons'
+import { IconCheckin, IconData, IconHome, IconPlans, IconRuler, IconStats } from './ui/Icons'
 
 /** Hauptnavigation — 6 Ziele, dauerhaft sichtbar (Spec §3.7). */
 interface NavItem {
@@ -53,11 +46,9 @@ export function Layout() {
       <div className="relative mx-auto flex w-full max-w-6xl lg:gap-10 lg:px-6">
         {/* ---------- Desktop-Seitenleiste ---------- */}
         <aside className="sticky top-0 hidden h-dvh w-56 shrink-0 flex-col py-7 lg:flex">
-          <div className="mb-9 flex items-center gap-2.5 px-3">
-            <span className="grid size-10 place-items-center rounded-[13px] bg-ink text-[19px] text-accent">
-              <IconDumbbell />
-            </span>
-            <span className="font-display text-[19px] uppercase">Volt</span>
+          {/* Kein Schriftzug daneben: Das Logo trägt ihn bereits. */}
+          <div className="mb-9 px-3">
+            <BrandMark size={44} />
           </div>
 
           <nav className="flex flex-col gap-1" aria-label="Hauptnavigation">
