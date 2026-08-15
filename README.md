@@ -48,8 +48,20 @@ Meldung ab, statt später mit unverständlichen Netzwerkfehlern zu scheitern.
 
 ### Deployment (Vercel)
 
-Framework-Preset **Vite**, Build `npm run build`, Output `dist`. Beide Umgebungsvariablen
-eintragen. SPA-Fallback auf `index.html` — sonst liefert ein direkter Aufruf von `/stats` einen 404.
+Framework-Preset **Vite**, Build `npm run build`, Output `dist`. Der SPA-Fallback steht in
+[`vercel.json`](vercel.json) — ohne ihn liefert ein direkter Aufruf von `/stats` einen 404.
+
+Die Konfiguration für Produktions-Builds liegt in [`.env.production`](.env.production) **im Repo**.
+Das ist Absicht und kein Sicherheitsverlust: Der Publishable Key landet zwangsläufig im
+ausgelieferten JavaScript — jeder Besucher kann ihn lesen, geheim halten lässt er sich nicht.
+Geschützt werden die Daten durch Row Level Security, nicht durch Geheimhaltung des Keys.
+
+Vorrang ist geprüft: Echte Umgebungsvariablen (etwa aus den Vercel-Projekteinstellungen)
+gewinnen gegen die Datei — Vite überschreibt bereits vorhandene Werte nicht. Für ein zweites
+Supabase-Projekt genügt es also, sie im Hosting zu setzen; an der Datei ist nichts zu ändern.
+
+> Der Secret Key (`sb_secret_…`) gehört **niemals** hierher. Er umgeht RLS vollständig. Ein
+> `VITE_`-Präfix davor würde ihn direkt ins öffentliche Bundle schreiben.
 
 ---
 
