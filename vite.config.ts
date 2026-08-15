@@ -10,8 +10,16 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: 'prompt',
+      // Keine automatisch eingefügte Registrierung: Die Registrierung läuft über
+      // `PwaUpdatePrompt`, sonst gäbe es sie doppelt — und der Hinweis auf eine
+      // neue Version käme nie an.
+      injectRegister: null,
       includeAssets: ['favicon.svg', 'apple-touch-icon.png'],
       manifest: {
+        // `id` hält die App-Identität stabil, auch wenn sich `start_url`
+        // einmal ändert. Ohne das Feld leitet der Browser die Identität aus
+        // der URL ab und würde eine bereits installierte App als neue ansehen.
+        id: '/',
         name: 'Gym Tracker',
         short_name: 'Gym',
         description: 'Persönlicher Krafttrainings-Tracker',

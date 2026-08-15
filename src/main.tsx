@@ -5,6 +5,7 @@ import { Toaster, toast } from 'sonner'
 import App from './App'
 import { AuthProvider } from './context/AuthContext'
 import { ThemeProvider } from './context/ThemeContext'
+import { PwaUpdatePrompt } from './components/PwaUpdatePrompt'
 import { startSyncWatcher, onOpDropped } from './lib/syncQueue'
 import './styles/index.css'
 
@@ -28,6 +29,7 @@ createRoot(document.getElementById('root')!).render(
       <AuthProvider>
         <BrowserRouter>
           <App />
+          <PwaUpdatePrompt />
           <Toaster
             position="top-center"
             richColors={false}
