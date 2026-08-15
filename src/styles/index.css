@@ -1,0 +1,396 @@
+@import 'tailwindcss';
+@import './fonts.css';
+@import './tokens.css';
+
+/* Die Tokens aus tokens.css werden hier auf Tailwind-Utilities abgebildet.
+   `inline` sorgt dafuer, dass die Utilities direkt auf var(--…) zeigen —
+   dadurch wirkt ein Theme-Wechsel sofort, ohne dass CSS neu erzeugt wird. */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-grad: var(--bg-grad);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+
+  --color-accent: var(--accent);
+  --color-accent-hi: var(--accent-hi);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-fg: var(--accent-fg);
+
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-danger: var(--danger);
+  --color-danger-hi: var(--danger-hi);
+  --color-danger-ink: var(--danger-ink);
+  --color-danger-soft: var(--danger-soft);
+
+  /* Die immer dunklen Fokus-Flaechen */
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-ink-line: var(--ink-line);
+  --color-on-ink: var(--on-ink);
+  --color-on-ink-muted: var(--on-ink-muted);
+  --color-on-ink-subtle: var(--on-ink-subtle);
+
+  --color-scrim: var(--scrim);
+  --color-skeleton: var(--skeleton);
+
+  --radius-xs: var(--radius-xs);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+  --radius-2xl: var(--radius-2xl);
+
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+
+  --font-display: var(--font-display);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+
+  --ease-out: var(--ease-out);
+  --ease-spring: var(--ease-spring);
+}
+
+/* ==========================================================================
+   Grundlagen
+   ========================================================================== */
+
+@layer base {
+  * {
+    border-color: var(--line);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior-y: none;
+  }
+
+  /* Ueberschriften und Zahlen laufen in Archivo Black, eng und in
+     Grossbuchstaben — das ist die praegende Geste des Designs. */
+  h1,
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  h3 {
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+
+  /* Zahlen immer tabellarisch: Gewichte und Wiederholungen springen sonst
+     beim Aktualisieren in der Breite. */
+  .tnum,
+  input[type='number'],
+  table {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: var(--radius-xs);
+  }
+
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+  input[type='number'] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+  }
+
+  /* Datumsfeld im Dunkelmodus: das native Kalendersymbol ist sonst schwarz
+     auf schwarz. */
+  [data-theme='dark'] input[type='date']::-webkit-calendar-picker-indicator,
+  .on-ink input[type='date']::-webkit-calendar-picker-indicator {
+    filter: invert(1) opacity(0.6);
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+
+  @media (pointer: fine) {
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--line-strong);
+      border: 3px solid var(--bg);
+      border-radius: 999px;
+    }
+  }
+}
+
+/* ==========================================================================
+   Hilfs-Utilities
+   ========================================================================== */
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+  }
+
+  /* Die kleine Grossbuchstaben-Zeile ueber Ueberschriften ("HEUTIGES
+     TRAINING") — im Design durchgehend 12px/800/.14em. */
+  .eyebrow {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+
+  /* iPhone-Notch / Home-Indicator */
+  .pt-safe {
+    padding-top: env(safe-area-inset-top);
+  }
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .h-nav {
+    height: calc(68px + env(safe-area-inset-bottom));
+  }
+  .pb-nav {
+    padding-bottom: calc(92px + env(safe-area-inset-bottom));
+  }
+
+  .tap {
+    min-height: var(--tap-min);
+    min-width: var(--tap-min);
+  }
+  .tap-lg {
+    min-height: var(--tap-lg);
+  }
+
+  .card {
+    background-color: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+  }
+
+  /* Die dunkle Fokus-Karte des Designs, inklusive Lime-Schein in der Ecke.
+     Wird ueber `.ink-glow` als Pseudoelement ergaenzt. */
+  .ink-card {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--ink);
+    color: var(--on-ink);
+    border-radius: var(--radius-xl);
+  }
+
+  /* Native Steuerelemente (Auswahlfeld, Datumsfeld, Bildlaufleiste) richten
+     sich nach `color-scheme`. Ohne diese Zeile rendert der Browser sie auf der
+     schwarzen Karte im Hellmodus hell — mit unlesbarer Schrift. */
+  .ink-card,
+  .on-ink {
+    color-scheme: dark;
+  }
+
+  .ink-glow::before {
+    content: '';
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: var(--ink-glow);
+    pointer-events: none;
+  }
+
+  .glass {
+    background-color: color-mix(in oklab, var(--surface) 86%, transparent);
+    backdrop-filter: blur(16px) saturate(1.4);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  }
+
+  .sr-only-focusable:not(:focus):not(:focus-within) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+}
+
+/* ==========================================================================
+   Bewegung
+   ========================================================================== */
+
+@keyframes gt-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes gt-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes gt-sheet-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes gt-shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes gt-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes gt-pop {
+  0% {
+    transform: scale(0.92);
+  }
+  60% {
+    transform: scale(1.04);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Der Balken eines Satzes, der gerade geloggt wurde, blitzt kurz auf. */
+@keyframes gt-flash {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 70%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 14px transparent;
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: gt-fade-in var(--dur) var(--ease-out) both;
+  }
+  .animate-rise {
+    animation: gt-rise var(--dur-slow) var(--ease-out) both;
+  }
+  .animate-sheet-in {
+    animation: gt-sheet-in var(--dur-slow) var(--ease-out) both;
+  }
+  .animate-pop {
+    animation: gt-pop var(--dur) var(--ease-spring) both;
+  }
+  .animate-flash {
+    animation: gt-flash 600ms var(--ease-out) both;
+  }
+  .animate-spin-slow {
+    animation: gt-spin 900ms linear infinite;
+  }
+
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      var(--skeleton) 25%,
+      var(--skeleton-hi) 37%,
+      var(--skeleton) 63%
+    );
+    background-size: 300% 100%;
+    animation: gt-shimmer 1.4s ease-in-out infinite;
+    border-radius: var(--radius-md);
+  }
+}
+
+/* Gestaffelter Auftritt von Listen */
+.stagger > * {
+  animation: gt-rise var(--dur-slow) var(--ease-out) both;
+}
+.stagger > *:nth-child(1) {
+  animation-delay: 0ms;
+}
+.stagger > *:nth-child(2) {
+  animation-delay: 40ms;
+}
+.stagger > *:nth-child(3) {
+  animation-delay: 80ms;
+}
+.stagger > *:nth-child(4) {
+  animation-delay: 120ms;
+}
+.stagger > *:nth-child(5) {
+  animation-delay: 160ms;
+}
+.stagger > *:nth-child(n + 6) {
+  animation-delay: 200ms;
+}
+
+.recharts-wrapper:focus,
+.recharts-surface:focus {
+  outline: none;
+}

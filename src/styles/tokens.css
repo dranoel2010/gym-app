@@ -1,0 +1,223 @@
+/* ==========================================================================
+   DESIGN-TOKENS — die einzige Datei mit Farbwerten
+   ==========================================================================
+
+   Quelle: Claude-Design-Projekt "Volt—Training" (Gym App.dc.html).
+   Alles andere in der App benutzt ausschliesslich die Namen von hier.
+
+   Aufbau:
+     :root                 -> helle Palette (entspricht 1:1 den Screens
+                              Home / Plan-Detail / Fortschritt des Designs)
+     [data-theme="dark"]   -> dunkle Palette
+     --ink-* (beide)       -> die IMMER dunklen "Fokus"-Flaechen des Designs:
+                              Hero-Karte auf dem Dashboard, Volumen-Karte in der
+                              Statistik, der komplette Trainings-Screen. Sie
+                              bleiben in beiden Modi dunkel, weil genau darin
+                              die Bildsprache liegt.
+
+   Der Akzent ist in BEIDEN Modi dasselbe Lime. Er ist immer eine FLAeCHE mit
+   dunkler Schrift darauf (--accent-ink), nie farbiger Text auf hellem Grund —
+   dafuer gibt es --accent-fg, das im Hellmodus dunkler ausfaellt, damit der
+   Kontrast stimmt.
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* --- Flaechen ---------------------------------------------------------- */
+  --bg: #f4f4f2;
+  --bg-grad: #ececeb;
+  --surface: #ffffff;
+  /* Eingelassene Flächen sitzen im Hellmodus fast immer auf einer weißen
+     Karte. Sie sind bewusst etwas dunkler als der Seitengrund (--bg), sonst
+     verschwänden Eingabefelder und Chips, wenn sie doch einmal direkt auf der
+     Seite liegen. */
+  --surface-2: #eeeeec;
+  --surface-3: #e4e4e1;
+  --line: #ececea;
+  --line-strong: #d8d8d4;
+
+  /* --- Text -------------------------------------------------------------- */
+  --fg: #0e0f12;
+  --muted: #8b909a;
+  --subtle: #b4b8bf;
+
+  /* --- Akzent ------------------------------------------------------------ */
+  --accent: #c6f24e;
+  --accent-hi: #b7e83a;
+  --accent-ink: #0e0f12;
+  --accent-soft: #eef9d2;
+  /* Akzentfarbe fuer TEXT auf hellem Grund — Lime selbst waere unlesbar. */
+  --accent-fg: #5f8c0b;
+
+  /* --- Status ------------------------------------------------------------ */
+  --success: #5f8c0b;
+  --success-soft: #eaf5d6;
+  --warn: #9a6b00;
+  --warn-soft: #fdf1d6;
+  --danger: #c02617;
+  --danger-hi: #a11f12;
+  --danger-ink: #ffffff;
+  --danger-soft: #fce9e7;
+
+  /* --- Diagramme --------------------------------------------------------- */
+  --chart-1: #c6f24e;
+  --chart-2: #0e0f12;
+  --chart-3: #8b909a;
+  --chart-grid: #ececea;
+  --chart-axis: #b4b8bf;
+
+  /* --- Overlays ---------------------------------------------------------- */
+  --scrim: rgb(14 15 18 / 0.5);
+  --skeleton: #e9e9e6;
+  --skeleton-hi: #f5f5f3;
+
+  /* --- Schatten ---------------------------------------------------------- */
+  --shadow-sm: 0 1px 2px rgb(14 15 18 / 0.04);
+  --shadow-md: 0 6px 16px -4px rgb(14 15 18 / 0.1), 0 2px 6px -2px rgb(14 15 18 / 0.06);
+  --shadow-lg: 0 30px 60px -22px rgb(14 15 18 / 0.35), 0 6px 16px -6px rgb(14 15 18 / 0.12);
+  --shadow-nav: 0 -1px 0 var(--line);
+  /* Der leuchtende Ring unter dem Lime-Knopf aus dem Design */
+  --shadow-accent: 0 8px 20px -6px rgb(198 242 78 / 0.55);
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg: #0e0f12;
+  --bg-grad: #16181d;
+  --surface: #16181d;
+  --surface-2: #1c1f26;
+  --surface-3: #23262d;
+  --line: #23262d;
+  --line-strong: #2c2f37;
+
+  --fg: #ffffff;
+  --muted: #9aa0aa;
+  --subtle: #6b6f76;
+
+  --accent: #c6f24e;
+  --accent-hi: #d3f76e;
+  --accent-ink: #0e0f12;
+  --accent-soft: #232c14;
+  --accent-fg: #c6f24e;
+
+  --success: #a4d92f;
+  --success-soft: #202b10;
+  --warn: #f0b429;
+  --warn-soft: #2f2510;
+  --danger: #f87171;
+  --danger-hi: #fca5a5;
+  --danger-ink: #2a0b0b;
+  --danger-soft: #351717;
+
+  --chart-1: #c6f24e;
+  --chart-2: #ffffff;
+  --chart-3: #6b6f76;
+  --chart-grid: #23262d;
+  --chart-axis: #6b6f76;
+
+  --scrim: rgb(0 0 0 / 0.7);
+  --skeleton: #1c1f26;
+  --skeleton-hi: #262a31;
+
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.5);
+  --shadow-md: 0 6px 16px -4px rgb(0 0 0 / 0.6), 0 2px 6px -2px rgb(0 0 0 / 0.5);
+  --shadow-lg: 0 30px 60px -22px rgb(0 0 0 / 0.85), 0 6px 16px -6px rgb(0 0 0 / 0.6);
+  --shadow-nav: 0 -1px 0 var(--line);
+  --shadow-accent: 0 8px 20px -6px rgb(198 242 78 / 0.4);
+}
+
+/* Fallback, falls das Inline-Skript in index.html nicht laeuft (JS aus). */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --bg: #0e0f12;
+    --bg-grad: #16181d;
+    --surface: #16181d;
+    --surface-2: #1c1f26;
+    --surface-3: #23262d;
+    --line: #23262d;
+    --line-strong: #2c2f37;
+    --fg: #ffffff;
+    --muted: #9aa0aa;
+    --subtle: #6b6f76;
+    --accent-soft: #232c14;
+    --accent-fg: #c6f24e;
+    --success: #a4d92f;
+    --success-soft: #202b10;
+    --warn: #f0b429;
+    --warn-soft: #2f2510;
+    --danger: #f87171;
+    --danger-hi: #fca5a5;
+    --danger-ink: #2a0b0b;
+    --danger-soft: #351717;
+    --chart-2: #ffffff;
+    --chart-3: #6b6f76;
+    --chart-grid: #23262d;
+    --chart-axis: #6b6f76;
+    --scrim: rgb(0 0 0 / 0.7);
+    --skeleton: #1c1f26;
+    --skeleton-hi: #262a31;
+  }
+}
+
+/* ==========================================================================
+   Die immer dunklen Fokus-Flaechen
+   ==========================================================================
+   Im Design sind die wichtigsten Flaechen tiefschwarz, egal wie hell der Rest
+   ist: die "Heutiges Training"-Karte, die Volumen-Karte und der gesamte
+   Trainings-Screen. Diese Tokens gelten deshalb in beiden Modi gleich.
+   ========================================================================== */
+
+:root,
+[data-theme='dark'] {
+  --ink: #0e0f12;
+  --ink-2: #16181d;
+  --ink-3: #1c1f26;
+  --ink-line: #2c2f37;
+  --on-ink: #ffffff;
+  --on-ink-muted: #9aa0aa;
+  --on-ink-subtle: #6b6f76;
+  /* Der wiederkehrende Lime-Schein in den Ecken der dunklen Karten */
+  --ink-glow: radial-gradient(circle, rgb(198 242 78 / 0.32), transparent 70%);
+}
+
+/* ==========================================================================
+   Form, Raum, Bewegung
+   ========================================================================== */
+
+:root {
+  /* Radien — das Design arbeitet mit deutlich runderen Formen als ueblich */
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 26px;
+  --radius-2xl: 32px;
+  --radius-pill: 100px;
+
+  /* Beruehrungsflaechen — Bedienung mit einer Hand, oft schwitzige Finger */
+  --tap-min: 44px;
+  --tap-lg: 54px;
+
+  /* Bewegung */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast: 120ms;
+  --dur: 200ms;
+  --dur-slow: 320ms;
+
+  /* Schrift: Archivo fuer Zahlen und Ueberschriften, Manrope fuer alles andere */
+  --font-display: 'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 1ms;
+    --dur: 1ms;
+    --dur-slow: 1ms;
+  }
+}

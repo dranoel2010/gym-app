@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5"
+    />
+    <title>Gym Tracker</title>
+    <meta name="description" content="Persönlicher Krafttrainings-Tracker" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="theme-color" content="#0e0f12" />
+
+    <!-- Die beiden wichtigsten Schriftschnitte vorladen: Archivo Black traegt
+         jede Ueberschrift und jede Zahl, ohne sie flackert der erste Eindruck. -->
+    <link
+      rel="preload"
+      href="/fonts/archivo-900-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/manrope-600-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <script>
+      // Laeuft vor dem ersten Paint und setzt data-theme auf den aufgeloesten
+      // Wert ("light" oder "dark"). Ohne das blitzt beim Laden die helle
+      // Palette auf, bevor React den Dunkelmodus setzt.
+      ;(function () {
+        try {
+          var pref = localStorage.getItem('gt.theme') || 'system'
+          var dark =
+            pref === 'dark' ||
+            (pref === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)
+          var theme = dark ? 'dark' : 'light'
+          document.documentElement.setAttribute('data-theme', theme)
+          var meta = document.querySelector('meta[name="theme-color"]')
+          if (meta) meta.setAttribute('content', dark ? '#0e0f12' : '#f4f4f2')
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'light')
+        }
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
