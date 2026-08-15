@@ -7,6 +7,7 @@ import { fetchAll } from '@/lib/fetchAll'
 import { reportError } from '@/lib/errors'
 import { formatDateTime, formatElapsed, isoDaysAgo } from '@/lib/date'
 import { avgWorkoutsPerWeek, formatNumber, totalVolume, weekStreak } from '@/lib/formulas'
+import { greetingNameOf } from '@/lib/profile'
 import type { Plan, Workout } from '@/lib/database.types'
 import { Button, LinkButton } from '@/components/ui/Button'
 import { Select } from '@/components/ui/Field'
@@ -130,7 +131,7 @@ export default function Dashboard() {
     }
   }
 
-  const greeting = (user?.email ?? '').split('@')[0] || 'Athlet'
+  const greeting = greetingNameOf(user)
   const today = new Date().toLocaleDateString('de-DE', {
     weekday: 'long',
     day: 'numeric',
@@ -142,9 +143,7 @@ export default function Dashboard() {
       {/* ---------- Begrüßung ---------- */}
       <div className="mb-6">
         <p className="text-[13px] font-bold text-muted">{today}</p>
-        <h1 className="font-display mt-1 text-[28px]">
-          Hey, <span className="capitalize">{greeting}</span>
-        </h1>
+        <h1 className="font-display mt-1 text-[28px]">Hey, {greeting}</h1>
       </div>
 
       {/* ---------- Laufendes Training ---------- */}

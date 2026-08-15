@@ -147,8 +147,12 @@ System übernommen und auf alle Screens ausgerollt:
    („Training starten") liegt bereits als großer Lime-Knopf auf dem Startbildschirm.
 2. **Kein „Profil"-Punkt in der Navigation** — aus demselben Grund. Konto und Darstellung
    sitzen hinter dem Avatar oben rechts, wie im Home-Screen des Designs.
-3. **Kein Onboarding-Screen.** Die Spec kennt keinen; seine Gestaltung ist stattdessen in die
-   Anmelde- und Registrierungsseiten geflossen.
+3. **Onboarding nachgereicht.** Die Spec kennt keinen Onboarding-Schritt, das Design schon
+   (Screen 01). Er wurde später ergänzt und fragt genau eine Sache: den Anzeigenamen, damit
+   auf dem Start „Hey, Leo" steht statt des Teils vor dem @ der E-Mail-Adresse. Der Name liegt
+   in `user_metadata` — keine Profiltabelle, kein zusätzliches RLS — und ist im Konto-Menü
+   änderbar. Der Schritt sitzt in `ProtectedRoute`, nicht als eigene Route: So gibt es keinen
+   Pfad daran vorbei und kein Zurück-Wischen mitten hinein.
 
 Die Anmeldeseiten sind immer dunkel, unabhängig vom gewählten Modus — so wie der
 Einstiegsscreen des Designs. Der Hell/Dunkel-Umschalter sitzt im Konto-Menü innerhalb der App.
