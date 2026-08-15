@@ -34,6 +34,8 @@ Meldung ab, statt später mit unverständlichen Netzwerkfehlern zu scheitern.
    einfügen und ausführen. Die Datei ist idempotent — mehrfaches Ausführen ist unschädlich.
    Sie legt an: sieben Tabellen, alle `CHECK`-Constraints, Indizes, RLS-Policies,
    vier Postgres-Funktionen und den Storage-Bucket `progress-photos` samt Policies.
+   Danach [`supabase/verify.sql`](supabase/verify.sql) ausführen — das Skript liest nur und
+   gibt je Prüfung eine Zeile aus. Alles muss auf `OK` stehen.
 3. **Project Settings → API**: `Project URL` und `anon public` Key nach `.env.local` kopieren.
 4. **Authentication → Providers → Email**: „Confirm email" **aktiviert** lassen
    (so entschieden, siehe *Offene Punkte* unten).
@@ -182,13 +184,27 @@ den Import erst an einem Datenbankfehler scheitern zu lassen.
 
 ## Was noch offen ist
 
-- **Integrationstests** (Spec §6): Paginierung, `save_plan`-Transaktion und RLS lassen sich nur
-  gegen eine echte Supabase-Instanz prüfen. Die 62 Unit-Tests laufen; diese drei stehen aus.
-- **Prüfung gegen ein echtes Backend**: Alle Screens wurden im Browser angesehen — mit
-  abgefangenen Supabase-Antworten, also nur die Darstellung. Ob Insert, Upsert, Storage-Upload
-  und RLS im Zusammenspiel funktionieren, zeigt sich erst am echten Projekt.
-- **Der erste Durchlauf gegen echte Daten** sollte gezielt prüfen: Training starten (genau ein
-  offenes Workout), Satz offline loggen und wieder online gehen, Plan mit ungültigem Wert
-  speichern (alte Übungen müssen unverändert bleiben), Backup mit >1000 Sätzen.
+### Bereits gegen das echte Projekt geprüft
+
+Schema angewendet und von außen verifiziert (anonymer Zugriff, Stand 15.08.2026):
+
+- Sieben Tabellen mit allen 46 Spalten vorhanden
+- RLS greift: Lesen liefert `[]`, Schreiben scheitert mit `42501`
+- Alle vier Funktionen existieren und verhalten sich richtig — `save_plan` wird als anonymer
+  Aufruf von RLS abgewiesen und legt **nichts** an. Genau dafür steht dort `security invoker`;
+  mit `security definer` wäre die Funktion an RLS vorbeigelaufen.
+- Bucket `progress-photos` existiert und ist privat
+- E-Mail-Bestätigung ist aktiv
+- Ein echter Anmeldeversuch aus der App liefert die generische Meldung nach §4.1 AK-1,
+  die Rohmeldung landet nur in der Konsole
+
+### Noch offen
+
+- **Was eine angemeldete Sitzung braucht**: die `CHECK`-Constraints (RIR 0–10, Gewicht, Maße,
+  Schlaf), der partielle Unique-Index aus §4.5 AK-1, die Transaktionalität von `save_plan`,
+  Offline-Sync, Backup-Paginierung über 1000 Sätze — und der RLS-Kreuztest aus §6
+  (Nutzer A darf Zeilen von Nutzer B in keiner Tabelle sehen), für den zwei Konten nötig sind.
+- **Darstellung** wurde im Browser über alle Screens geprüft, allerdings mit abgefangenen
+  Supabase-Antworten. Das echte Zusammenspiel von Insert, Upsert und Storage-Upload steht aus.
 - Die Offline-Warteschlange nutzt `localStorage`. Bei sehr vielen unsynchronisierten Sätzen
   (>1000) wäre IndexedDB angemessener; für den vorgesehenen Gebrauch reicht es.
